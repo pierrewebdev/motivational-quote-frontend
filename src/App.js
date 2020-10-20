@@ -4,7 +4,7 @@ import Home from "./components/home_page";
 import Header from "./components/header";
 import SignIn from "./components/sign_in_form";
 import SignUp from "./components/sing_up_form";
-import Quote from "./components/quote";
+import QuoteContainer from "./components/quote-container";
 import NotFound from "./components/not_found.js";
 
 //routes
@@ -15,7 +15,8 @@ import { Route, Switch } from "react-router-dom";
 
 class App extends React.Component {
   state = {
-    quotes:[]
+    quotes:[],
+    currentUser:{}
   }
 
 
@@ -29,13 +30,36 @@ class App extends React.Component {
       })
     })
   }
+
+  //method to log in user after they have submitted sign in form
+  logInUser = (formData) => {
+    const {username,password} = formData
+    fetch("http://localhost:3000/login",{
+      method:"POST",
+      headers:{
+        "Content-Type": "application/json",
+        Accept:"application/json"
+      },
+      body:JSON.stringify({
+        username:username,
+        password:password
+      })
+    })
+    .then(res => res.json())
+    .then(userInfo => {
+      this.setState({
+        currentUser:{...userInfo}
+      })
+    })
+  }
   render() {
+    console.log(this.state)
     return (
       <div className="App">
         <Header />
         <Switch>
           <Route path="/" exact>
-            <SignIn />
+            <SignIn logInUser = {this.logInUser}/>
           </Route>
 
           <Route path="/home">
@@ -47,7 +71,7 @@ class App extends React.Component {
           </Route>
 
           <Route path="/quote-generator" exact>
-            <Quote quotes = {this.state.quotes}/>
+            <QuoteContainer quotes = {this.state.quotes}/>
           </Route>
 
           <Route>
