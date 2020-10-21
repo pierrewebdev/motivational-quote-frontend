@@ -2,27 +2,54 @@ import React from "react"
 import "../stylesheets/sign_in_form.css"
 
 export default class SignUp extends React.Component {
+  state = {
+    firstName:"",
+   lastName:"",
+    username:"",
+    age:"",
+    password:""
+  }
+
+  handleUserInput = (evt) =>{
+    const inputName = evt.target.name
+    console.log(inputName)
+    this.setState({
+      [inputName]:evt.target.value
+    })
+   }
+ 
+   handleSubmit = (evt) =>{
+     evt.preventDefault()
+     //pass this info back up to the <App/> to make a post request
+     this.props.registerUser(this.state)
+   }
+
   render(){
+    // console.log(this.state)
     return (
       <div className="form-wrapper">
         <h1>Sign Up</h1>
-        <form>
+        <form onSubmit = {this.handleSubmit}>
         <div className="form-item">
             <label htmlFor="First Name"></label>
             <input
               type="text"
-              name="First Name"
+              name="firstName"
               required="required"
               placeholder="Enter First Name"
+              value = {this.state.firstName}
+              onChange = {this.handleUserInput}
             ></input>
           </div>
         <div className="form-item">
             <label htmlFor="Last Name"></label>
             <input
               type="text"
-              name="Last Name"
+              name="lastName"
               required="required"
               placeholder="Enter Last Name"
+              value = {this.state.lastName}
+              onChange = {this.handleUserInput}
             ></input>
           </div>
           <div className="form-item">
@@ -32,15 +59,19 @@ export default class SignUp extends React.Component {
               name="username"
               required="required"
               placeholder="Enter Username"
+              value = {this.state.username}
+              onChange = {this.handleUserInput}
             ></input>
           </div>
           <div className="form-item">
             <label htmlFor="Age"></label>
             <input
               type="number"
-              name="Age"
+              name="age"
               required="required"
               placeholder="Enter Age"
+              value = {this.state.age}
+              onChange = {this.handleUserInput}
             ></input>
           </div>
           <div className="form-item">
@@ -50,6 +81,8 @@ export default class SignUp extends React.Component {
               name="password"
               required="required"
               placeholder="Password"
+              value = {this.state.password}
+              onChange = {this.handleUserInput}
             ></input>
           </div>
           <div className="button-panel">
