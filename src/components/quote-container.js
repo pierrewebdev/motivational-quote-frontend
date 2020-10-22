@@ -24,8 +24,6 @@ export default class QuoteContainer extends React.Component {
 
 
   render(){
-    // console.log(this.state)
-    // console.log(this.props)
     let foundQuote = this.props.quotes[this.state.index]
     let content = foundQuote ? foundQuote.content : ""
     let author = foundQuote ? foundQuote.author : ""

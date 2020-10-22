@@ -43,12 +43,29 @@ class App extends React.Component {
       fetch("http://localhost:3000/users/keep_logged_in",{
         method:"GET",
         headers:{
-          "Auhtorization": localStorage.token
+          "Authorization": localStorage.token
         }
       })
-      .then(res => console.log(res))
+      .then(res => res.json())
+      .then(userInfo => {
+        if(userInfo.error_message){
+          this.setState({
+            errorMessage: userInfo.error_message
+          })
+        }
+        else{
+          //happens when a user has successfully logged in
+          localStorage.token = userInfo.token
+          let niceState = {...userInfo.user.user,token:userInfo.token}
+          this.setState(niceState)
+          this.props.history.push("/home")
+        }
+      })
     }
   }
+
+ //==================================================================//
+ //user login and registration 
 
   //method to log in user after they have submitted sign in form
   logInUser = (formData) => {
@@ -118,6 +135,59 @@ class App extends React.Component {
       }
     })
   }
+ //==================================================================//
+
+ //CRUD methods
+ //method to add a new quote; needs to make use of the auth token in the headers
+ addNewQuote = (quoteObj) => {
+   fetch("http://localHost:3000/quotes",{
+    method:"POST",
+    headers: {
+        "Content-Type":"application/json",
+        "authorization": this.state.token
+    },
+    body: JSON.stringify({
+      content: quoteObj.quoteText,
+      author: quoteObj.author
+    })
+   })
+   .then(res => res.json())
+   .then(newQuoteObj => {
+     debugger
+     //need to add it into the state of quotes non-destructively
+     const updatedUserQuotes = [...this.state.quotes,newQuoteObj.quote]
+     const updatedAllQuotes = [...this.state.allQuotes,newQuoteObj.quote]
+
+     this.setState({
+       quotes:updatedUserQuotes,
+       allQuotes: updatedAllQuotes
+     })
+   })
+ }
+
+//creating one method that will allow me to delete from both favorites and quotes
+ deleteQuote = (quoteId) =>{
+  fetch(`http://localhost:3000/quotes/${quoteId}`,{
+    method:"DELETE",
+    headers:{
+      "Content-Type":"application/json",
+      "authorization": this.state.token
+    }
+  })
+  .then(res => res.json())
+  .then(deletedQuoteObj => {
+    //update the arrays allQuotes and quotes in the state
+    const filteredUserQuotes = this.state.quotes.filter( quote => quote.id!== deletedQuoteObj.quote.id)
+    const filteredAllQuotes = this.state.allQuotes.filter(quote => quote.id!== deletedQuoteObj.quote.id)
+
+    this.setState({
+      quotes:filteredUserQuotes,
+      allQuotes: filteredAllQuotes
+    })
+  })
+}
+
+
 
   render() {
     return (
@@ -142,7 +212,7 @@ class App extends React.Component {
           </Route>
 
           <Route path = "/my-quotes" exact>
-            <MyQuote quotes = {this.state.quotes}/>
+            <MyQuote deleteQuote = {this.deleteQuote} addNewQuote = {this.addNewQuote} quotes = {this.state.quotes}/>
           </Route>
 
           <Route>
