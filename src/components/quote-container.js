@@ -1,5 +1,5 @@
 import React from "react";
-import Quote from "./quote.js"
+import Quote from "./quote"
 import {Link} from "react-router-dom"
 
 export default class QuoteContainer extends React.Component {

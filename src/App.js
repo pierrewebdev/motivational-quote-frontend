@@ -6,6 +6,8 @@ import SignIn from "./components/sign_in_form";
 import SignUp from "./components/sing_up_form";
 import QuoteContainer from "./components/quote-container";
 import MyQuote from "./components/my-quote-container"
+import Profile from "./components/profile.js"
+import ProfileForm from "./components/profile-form.js"
 import NotFound from "./components/not_found.js";
 
 //routes
@@ -187,9 +189,25 @@ class App extends React.Component {
   })
 }
 
+  handleProfileEdit = (userObj) => {
+    //update info in backend
+    fetch(`http://localhost:3000/users/${this.state.id}`,{
+      method:"PATCH",
+      headers: {
+        "Content-Type":"application/json",
+        "authorization": this.state.token
+      },
+      body: JSON.stringify({...userObj})
+    })
+    .then(res => res.json())
+    .then(updatedUserObj =>{
+      this.setState({...updatedUserObj.user})
+    })
+  }
 
 
   render() {
+    console.log(this.state.full_name)
     return (
       <div className="App">
         <Header />
@@ -213,6 +231,14 @@ class App extends React.Component {
 
           <Route path = "/my-quotes" exact>
             <MyQuote deleteQuote = {this.deleteQuote} addNewQuote = {this.addNewQuote} quotes = {this.state.quotes}/>
+          </Route>
+
+          <Route path="/profile" exact>
+            <Profile name = {this.state.full_name} age = {this.state.age}/>
+          </Route>
+
+          <Route path="/edit-user-profile" exact>
+            <ProfileForm editProfile = {this.handleProfileEdit}  />
           </Route>
 
           <Route>

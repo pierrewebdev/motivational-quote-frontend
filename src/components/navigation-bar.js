@@ -17,6 +17,7 @@ export default class Nav extends React.Component{
           <li style = {liStyles}> <Link to = "/home">Motivate Me</Link></li>
           <li style = {liStyles}> <Link to = "/quote-generator">Quotes</Link></li>
           <li style = {liStyles}> <Link to = "/favorites">Favorites</Link></li>
+          <li style = {liStyles}> <Link to = "/profile">My Profile</Link></li>
         </ul>
       </nav>
     );
