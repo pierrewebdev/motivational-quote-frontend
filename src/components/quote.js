@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid } from "semantic-ui-react";
+import ShareTweet from "./twitter_share"
 
 
 //a single quote object will be the props here
@@ -42,6 +42,7 @@ export default class Quote extends React.Component {
         <p style={{ fontSize: "18px" }}>{`"${content}"`}</p>
         <p style={{ fontSize: "15px" }}>~{author}</p>
         {this.buttonToMatchBool()}
+        <ShareTweet quote = {content}/>
       </div>
     );
   }

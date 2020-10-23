@@ -24,11 +24,8 @@ export default function MyQuote(props) {
         <Card.Content extra>
           Author: {author}
         </Card.Content>
-        {/* <p style={{ fontSize: "18px" }}>{`"${content}"`}</p>
-        <p style={{ fontSize: "15px" }}>~{author}</p> */}
-
         <div className="side-by-side-btns">
-          <button onClick={handleDelete}>Delete</button>
+          <button className = "ui inverted violet button" onClick={handleDelete}>Delete</button>
         </div>
       </Card>
     </div>

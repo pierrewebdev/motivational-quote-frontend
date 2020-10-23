@@ -62,3 +62,4 @@ export default class Home extends React.Component {
     return this.props.currentUser.id ? homePage : logInFirst;
   }
 }
+

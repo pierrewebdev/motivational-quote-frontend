@@ -20,9 +20,10 @@ export default class Favorite extends React.Component{
     render(){
         const favoriteComponent = (
             this.props.favorites.length<1 ?
-                <p>You have not added any Favorites yet...</p>
+                <p style = {{fontSize:"25px",marginTop:"50px"}}>You have not added any Favorites yet...</p>
                 :
                 <ul>
+                    <h2>All your Favorites</h2>
                     {this.userFavorites()}
                 </ul>
         )

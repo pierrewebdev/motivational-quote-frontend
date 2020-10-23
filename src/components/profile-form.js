@@ -1,5 +1,7 @@
 import React from "react"
 import { Link } from "react-router-dom"
+import { Form } from "semantic-ui-react"
+
 
 
 export default class ProfileForm extends React.Component{
@@ -24,11 +26,14 @@ export default class ProfileForm extends React.Component{
          //pass this info back up to the <App/> to make a post request
          this.props.editProfile(this.state)
        }
+
+       
     
     render(){
         return(
-            <div>
-                <form onSubmit = {this.handleSubmit}>
+            <div className = "profile-form-div">
+              <h2>Profile Edit Form</h2>
+                <form className = "profile-form" onSubmit = {this.handleSubmit}>
                     <label htmlFor = "firstName">First Name: </label>
                     <input required = "required" type = "text" name = "firstName" value = {this.state.firstName} onChange = {this.handleUserInput}/>
                     <br/>
@@ -41,7 +46,7 @@ export default class ProfileForm extends React.Component{
                     <label htmlFor = "age">Age: </label>
                     <input required = "required" type = "number" name = "age" value = {this.state.age}onChange = {this.handleUserInput}/>
                     <br/>
-                    <input type = "submit"name = "submit"/>
+                    <input  id = "submitbtn" type = "submit"name = "submit"/>
                 </form>
             </div>
         )

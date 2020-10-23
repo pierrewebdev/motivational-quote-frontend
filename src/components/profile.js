@@ -1,5 +1,8 @@
 import React from "react";
 import { NavLink,Link } from "react-router-dom";
+import { Card } from "semantic-ui-react";
+
+
 
 export default class Profile extends React.Component {
   render() {
@@ -8,13 +11,12 @@ export default class Profile extends React.Component {
     };
     const profileComponent = (
       <div style={{ margin: "20px" }}>
-        <p style={{ fontSize: "25px" }}>Hello!!!</p>
+        <p style={{ fontSize: "25px" }}>Name: {this.props.name}</p>
         <p style={pTagStyle}>
-          My name is {this.props.name}, I am {this.props.age} years old
+         Age: {this.props.age} years old
         </p>
-        <p style={pTagStyle}>And I am ready to be motivated</p>
         <Link to="/edit-user-profile">
-          <button>Edit User Profile</button>
+          <button className = "ui button">Edit User Profile</button>
         </Link>
       </div>
     );

@@ -1,12 +1,18 @@
-import React from "react-router-dom";
+import React from "react";
 
-function shareTweet() {
+export default function ShareTweet(props) {
+  const mainUrl = "https://twitter.com/intent/tweet?text=";
+  const completeUrl = `${mainUrl}Here is a motivatioinal quote from /"Motivate Me/" --> ${props.quote.replace(
+    /\s/g,
+    "%20"
+  )}`;
+  console.log(completeUrl);
   return (
-    <a
-      class="twitter-share-button"
-      href="https://twitter.com/intent/tweet?text=If%20there%20are%20no %20open%20doors,%20make one"
-    >
-      Share this Motivation on Twitter
-    </a>
+    <div>
+      <i class="fa fa-twitter-square" aria-hidden="true"></i>
+      <a className="twitter-share-button" href={completeUrl}>
+        Share this Motivation on Twitter
+      </a>
+    </div>
   );
 }
