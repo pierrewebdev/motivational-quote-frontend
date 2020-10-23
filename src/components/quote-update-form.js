@@ -1,14 +1,9 @@
 import React from "react"
-import { Link } from "react-router-dom"
 
-
-export default class ProfileForm extends React.Component{
-
+export default class QuoteUpdate extends React.Component{
     state = {
-        firstName:"",
-       lastName:"",
-        username:"",
-        age:0
+        content:"",
+        author:""
       }
     
       handleUserInput = (evt) =>{
@@ -28,18 +23,14 @@ export default class ProfileForm extends React.Component{
     render(){
         return(
             <div>
+                <h1>Edit Your Quote</h1>
                 <form onSubmit = {this.handleSubmit}>
-                    <label htmlFor = "firstName">First Name: </label>
-                    <input required = "required" type = "text" name = "firstName" value = {this.state.firstName} onChange = {this.handleUserInput}/>
-                    <br/>
+                    <label htmlFor = "content">Content: </label>
+                    <textarea required="required" name = "quoteText" rows = "5" cols = "30" value = {this.state.content} onChange = {this.handleUserInput}></textarea><br>
+                    </br>
                     <label htmlFor = "lastName">Last Name: </label>
                     <input required = "required" type = "text" name = "lastName" value = {this.state.lastName} onChange = {this.handleUserInput}/>
                     <br/>
-                    <label htmlFor = "username">Username: </label>
-                    <input required = "required" type = "text" name = "username" value = {this.state.username} onChange = {this.handleUserInput}/>
-                    <br/>
-                    <label htmlFor = "age">Age: </label>
-                    <input required = "required" type = "number" name = "age" value = {this.state.age}onChange = {this.handleUserInput}/>
                     <br/>
                     <input type = "submit"name = "submit"/>
                 </form>

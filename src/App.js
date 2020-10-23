@@ -5,9 +5,11 @@ import Header from "./components/header";
 import SignIn from "./components/sign_in_form";
 import SignUp from "./components/sing_up_form";
 import QuoteContainer from "./components/quote-container";
-import MyQuote from "./components/my-quote-container"
+import MyQuoteContainer from "./components/my-quote-container"
 import Profile from "./components/profile.js"
+import Favorite from "./components/favorite-quote"
 import ProfileForm from "./components/profile-form.js"
+import QuoteUpdate from "./components/quote-update-form.js"
 import NotFound from "./components/not_found.js";
 
 //routes
@@ -15,6 +17,12 @@ import NotFound from "./components/not_found.js";
 //it will rnder the component that matches the url path or will render NotFound if nothing matches
 //The Link component functions as an <a></a>
 import { Route, Switch, Redirect, withRouter } from "react-router-dom";
+
+
+//=============================================================================//
+
+//Please note that when looking at any of the code involved in the second .then() of a fetch request, the data is nested a little deeper than what you would expect, so always console.log() the data you get back from a fetch request
+//This happens because a strange bug in my backend serializers
 
 class App extends React.Component {
   state = {
@@ -60,7 +68,7 @@ class App extends React.Component {
           localStorage.token = userInfo.token
           let niceState = {...userInfo.user.user,token:userInfo.token}
           this.setState(niceState)
-          this.props.history.push("/home")
+          this.props.history.push("/")
         }
       })
     }
@@ -96,7 +104,7 @@ class App extends React.Component {
         let niceState = {...userInfo.user.user,token:userInfo.token}
         console.log(niceState)
         this.setState(niceState)
-        this.props.history.push("/home")
+        this.props.history.push("/")
       }
     })
   }
@@ -133,7 +141,7 @@ class App extends React.Component {
         let niceState = {...newUserInfo.user.user,token:newUserInfo.token}
         console.log(niceState)
         this.setState(niceState)
-        this.props.history.push("/home")
+        this.props.history.push("/")
       }
     })
   }
@@ -155,7 +163,6 @@ class App extends React.Component {
    })
    .then(res => res.json())
    .then(newQuoteObj => {
-     debugger
      //need to add it into the state of quotes non-destructively
      const updatedUserQuotes = [...this.state.quotes,newQuoteObj.quote]
      const updatedAllQuotes = [...this.state.allQuotes,newQuoteObj.quote]
@@ -205,19 +212,70 @@ class App extends React.Component {
     })
   }
 
+  addNewFavorite = (quoteId) =>{
+    if (quoteId){
+      fetch("http://localhost:3000/favorites",{
+        method:"POST",
+        headers: {
+          "Content-Type":"application/json",
+          "authorization": this.state.token
+        },
+        body: JSON.stringify({
+          id:quoteId
+        })
+      })
+      .then(res => res.json())
+      .then(newFavoriteObj =>{
+        if(newFavoriteObj.error_message){
+          alert(newFavoriteObj.error_message)
+        }else{
+          //update the state of the user's favorites array
+          const newFavoritesArr = [...this.state.favorites,newFavoriteObj.favorite]
+          this.setState({
+            favorites:newFavoritesArr
+          })
+          alert("Successfully added quote to favorites!")
+        }
+      })
+    }
+  }
 
-  render() {
-    console.log(this.state.full_name)
+  deleteFavorite = (favoriteId) =>{
+    fetch(`http://localhost:3000/favorites/${favoriteId}`,{
+    method:"DELETE",
+    headers:{
+      "Content-Type":"application/json",
+      "authorization": this.state.token
+    }
+  })
+  .then(res => res.json())
+  .then(deletedFavoriteObj => {
+    //update the array of favorites in the state
+    const filteredfavorites = this.state.favorites.filter( favorite => favorite.id!== deletedFavoriteObj.favorite.id)
+
+    this.setState({
+      favorites:filteredfavorites
+    })
+    
+  })
+  }
+  
+
+  //===================================================
+  //methods for nested routing
+
+  render(){
     return (
       <div className="App">
         <Header />
-    {this.state.errorMessage ? <p style = {{fontWeight:"bold"}}>{this.state.errorMessage}</p> : null}
+        {/* <p style = {{fontWeight:"bold"}}>{this.state.errorMessage}</p> */}
+    {this.state.errorMessage ? alert(this.state.errorMessage): null}
         <Switch>
-          <Route path="/" exact>
+          <Route path="/login" exact>
             <SignIn logInUser = {this.logInUser}/>
           </Route>
 
-          <Route path="/home">
+          <Route path="/" exact>
             <Home currentUser = {this.state} history = {this.props.history}/>
           </Route>
 
@@ -226,11 +284,11 @@ class App extends React.Component {
           </Route>
 
           <Route path="/quote-generator" exact>
-            <QuoteContainer currentUser = {this.state} quotes = {this.state.allQuotes}/>
+            <QuoteContainer addNewFavorite = {this.addNewFavorite} currentUser = {this.state} quotes = {this.state.allQuotes}/>
           </Route>
 
           <Route path = "/my-quotes" exact>
-            <MyQuote deleteQuote = {this.deleteQuote} addNewQuote = {this.addNewQuote} quotes = {this.state.quotes}/>
+            <MyQuoteContainer deleteQuote = {this.deleteQuote} addNewQuote = {this.addNewQuote} quotes = {this.state.quotes}/>
           </Route>
 
           <Route path="/profile" exact>
@@ -239,6 +297,16 @@ class App extends React.Component {
 
           <Route path="/edit-user-profile" exact>
             <ProfileForm editProfile = {this.handleProfileEdit}  />
+          </Route>
+
+          <Route path = "quotes/:id" render = {this.renderSpecificQuote}/>
+
+          <Route path="/quotes/edit-quote" exact>
+            <QuoteUpdate />
+          </Route>
+
+          <Route path="/favorites" exact>
+            <Favorite deleteFavorite = {this.deleteFavorite} favorites = {this.state.favorites}/>
           </Route>
 
           <Route>

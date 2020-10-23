@@ -1,22 +1,16 @@
 import React from "react";
-import Quote from "./quote.js";
+import MyQuote from "./myquote.js";
 
-export default class MyQuote extends React.Component {
+export default class MyQuoteContainer extends React.Component {
     state = {
         quoteText:"",
         author:""
     }
 
-    handleDelete = (evt) =>{
-        // console.log(evt.currentTarget.id)
-        this.props.deleteQuote(evt.currentTarget.id)
-    }
-
     userQuoteCollection = () => {
-        return this.props.quotes.map( (quote,index) => {
-            return (<li key = {quote.id} id = {quote.id} onClick = {this.handleDelete}>
-                <Quote content = {quote.content} author = {quote.author}/>
-                <button>X</button>
+        return this.props.quotes.map( (quote) => {
+            return (<li key = {quote.id}>
+                <MyQuote deleteQuote = {this.props.deleteQuote} id = {quote.id} content = {quote.content} author = {quote.author}/>
             </li>)
         })
     }
@@ -50,7 +44,6 @@ export default class MyQuote extends React.Component {
             width:"31%",
             padding:"5px"
         }
-      console.log(this.props.quotes)
     return (
     <>
       <form style = {formStyle} onSubmit = {this.handleSubmit}>

@@ -25,12 +25,13 @@ export default class QuoteContainer extends React.Component {
 
   render(){
     let foundQuote = this.props.quotes[this.state.index]
+    let id = foundQuote ? foundQuote.id:null
     let content = foundQuote ? foundQuote.content : ""
     let author = foundQuote ? foundQuote.author : ""
     
     const quoteContainer = (
       <>
-        <Quote content = {content} author = {author}/>
+        <Quote addNewFavorite = {this.props.addNewFavorite} id = {id} content = {content} author = {author}/>
         <button
           onClick={() => this.updateCurrentQuote()}
           style={{ width: "15%", padding: "8px" }}
