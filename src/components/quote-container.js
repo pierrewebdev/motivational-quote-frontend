@@ -1,6 +1,6 @@
 import React from "react";
 import Quote from "./quote"
-import {Link} from "react-router-dom"
+import {NavLink,Link} from "react-router-dom"
 
 export default class QuoteContainer extends React.Component {
   //state object to store the current quote being rendered
@@ -30,18 +30,27 @@ export default class QuoteContainer extends React.Component {
     let author = foundQuote ? foundQuote.author : ""
     
     const quoteContainer = (
-      <>
+      <div className = "quote-container">
+        <h1 style = {{margin:"10px",color:"#444053"}}>Motivational Quotes at the Click of a Button</h1>
         <Quote addNewFavorite = {this.props.addNewFavorite} id = {id} content = {content} author = {author}/>
-        <button
+        <button className = "ui violet button"
           onClick={() => this.updateCurrentQuote()}
           style={{ width: "15%", padding: "8px" }}
         >
           Get a New Quote
         </button>
-        <p> <Link to = "/my-quotes">My Quotes</Link></p>
-      </>
+        <p> <Link to = "/my-quotes"><button style = {{margin:"15px",width:"auto"}} className = "myQuotes-btn ui button">My Quotes  <i className="fa fa-arrow-right" aria-hidden="true"></i></button></Link></p>
+      </div>
     )
+    const logInFirst = (
+      <div>
+          <p>Sorry you can't view this page until you log in or create an account</p>
+          <p>But as soon as you do we can give you all the motivation you need!</p>
+          <br/>
+          <NavLink to = "/login"><button>Log in here</button></NavLink>
+      </div>
+  )
 
-    return this.props.currentUser.id ? quoteContainer : <p>Need to Log in first</p>
+    return this.props.currentUser.id ? quoteContainer : logInFirst
   }
 }

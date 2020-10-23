@@ -1,5 +1,6 @@
 import React from "react";
-import { Route,Link } from "react-router-dom";
+import { Route, Link } from "react-router-dom";
+import { Card } from "semantic-ui-react";
 
 //a single quote object will be the props here
 export default function MyQuote(props) {
@@ -7,23 +8,29 @@ export default function MyQuote(props) {
   const content = props.content;
   const author = props.author;
 
-  const handleDelete = (evt) =>{
-    if (props.deleteQuote){
-        props.deleteQuote(props.id)
+  const handleDelete = (evt) => {
+    if (props.deleteQuote) {
+      props.deleteQuote(props.id);
+    } else {
+      props.deleteFavorite(props.favoriteId);
     }
-    else{
-        props.deleteFavorite(props.favoriteId)
-    }
-}
+  };
+
 
   return (
-    <div style={{ margin: "10px" }}>
-      <p style={{ fontSize: "18px" }}>{`"${content}"`}</p>
-      <p style={{ fontSize: "15px" }}>~{author}</p>
-      
-      <div className = "side-by-side-btns">
-        <button onClick = {handleDelete}>Delete</button>
-      </div>
+    <div className = "favorites-div">
+      <Card>
+        <Card.Content description={content} />
+        <Card.Content extra>
+          Author: {author}
+        </Card.Content>
+        {/* <p style={{ fontSize: "18px" }}>{`"${content}"`}</p>
+        <p style={{ fontSize: "15px" }}>~{author}</p> */}
+
+        <div className="side-by-side-btns">
+          <button onClick={handleDelete}>Delete</button>
+        </div>
+      </Card>
     </div>
   );
 }

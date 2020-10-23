@@ -1,4 +1,6 @@
 import React from "react";
+import { Grid } from "semantic-ui-react";
+
 
 //a single quote object will be the props here
 export default class Quote extends React.Component {
@@ -20,7 +22,7 @@ export default class Quote extends React.Component {
   buttonToMatchBool = () =>{
     let likeBtn;
     if (this.state.buttonBoolean){
-      likeBtn = (<p style={{ fontSize: "18px",fontWeight:"bold",color:"black" }} >Like <i onClick = {this.handleClick} style={{ fontSize: "18px" }} className="fa fa-thumbs-up" aria-hidden="true"></i></p>)
+      likeBtn = (<p style={{ fontSize: "18px",fontWeight:"bold",color:"white" }} >Like <i onClick = {this.handleClick} style={{ fontSize: "18px" }} className="fa fa-thumbs-up" aria-hidden="true"></i></p>)
     }
     else{
       likeBtn = (<p style={{ fontSize: "18px",fontWeight:"bold" }} >Like <i onClick = {this.handleClick} style={{ fontSize: "18px",color:"grayscale" }} className="fa fa-thumbs-up" aria-hidden="true"></i></p>)
@@ -36,7 +38,7 @@ export default class Quote extends React.Component {
 
 
     return (
-      <div style={{ margin: "50px" }}>
+      <div className = "quote-component" style={{ margin: "50px" }}>
         <p style={{ fontSize: "18px" }}>{`"${content}"`}</p>
         <p style={{ fontSize: "15px" }}>~{author}</p>
         {this.buttonToMatchBool()}

@@ -2,15 +2,14 @@ import React from 'react';
 import Nav from "./navigation-bar.js"
 
 const headerStyles = {
-    backgroundColor:"whitesmoke",
+    backgroundColor:"#444053",
     padding:"20px",
-    color:"black"
 }
 
-export default function Header(){
+export default function Header(props){
     return (
     <header style = {headerStyles}>
-         <Nav/>
+         <Nav logOut = {props.logOut} />
     </header>
     )
 }

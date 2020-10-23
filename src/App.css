@@ -2,6 +2,14 @@
   text-align: center;
 }
 
+* {
+  font-family: "Lato", sans-serif;
+}
+
+body {
+  background-color: #ededdd;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -36,3 +44,49 @@
     transform: rotate(360deg);
   }
 }
+.grid {
+  margin: 50px 0 0px 0;
+}
+
+.gridChild {
+  border: 3px none;
+  border-radius: 15%;
+  padding: 25px;
+  background-color: #444053;
+  width: 20%;
+  color: #f7f7f7;
+}
+
+.gridChild > p {
+  font-size: 16px;
+}
+
+.gridChild:hover {
+  cursor: pointer;
+  position: relative;
+  top: 2px;
+}
+
+.quote-component {
+  max-width: 40%;
+  padding: 15px;
+  background-color: #444053;
+  color: #f7f7f7;
+}
+
+.quote-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.ui.button {
+  background-color: #444053;
+  color: #f7f7f7;
+}
+
+.form-label {
+  font-size: 17px;
+  margin-bottom: 15px;
+}
+

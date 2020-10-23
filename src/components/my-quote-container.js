@@ -34,28 +34,23 @@ export default class MyQuoteContainer extends React.Component {
         margin:"50px"
       }
 
-      const buttonStyle = {
-          padding:"10px",
-          width:"15%",
-          margin:"10px"
-        }
-
         const authorInput = {
-            width:"31%",
+            width:"22%",
             padding:"5px"
         }
     return (
     <>
       <form style = {formStyle} onSubmit = {this.handleSubmit}>
-        <label htmlFor = "quoteText">What will the Quote Say?</label>
+        <label className = "form-label" htmlFor = "quoteText">What will the Quote Say?</label>
         <br/>
-       <textarea required="required" name = "quoteText" rows = "5" cols = "30" placeholder = "Inspirational Quote goes here..." value = {this.state.quoteText} onChange = {this.handleUserInput}></textarea>
+       <textarea required="required" name = "quoteText" rows = "5" cols = "30" value = {this.state.quoteText} onChange = {this.handleUserInput}></textarea>
         <br/>
-        <label htmlFor = "author">Who made it?</label>
+        <label className = "form-label" htmlFor = "author">Who made it?</label>
         <br/>
-        <input required="required" style = {authorInput} type = "text" name = "author" placeholder = "Author's name goes here..." value = {this.state.author} onChange = {this.handleUserInput}/>
+        <input required="required" style = {authorInput} type = "text" name = "author" value = {this.state.author} onChange = {this.handleUserInput}/>
         <br/>
-        <input style = {buttonStyle} type = "submit" value = "Add Quote" />
+        <br/>
+        <input className = "ui violet button" type = "submit" value = "Add Quote" />
       </form>
 
       <div>

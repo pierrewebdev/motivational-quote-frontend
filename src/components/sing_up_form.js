@@ -1,5 +1,7 @@
 import React from "react"
+import { Link } from "react-router-dom"
 import "../stylesheets/sign_in_form.css"
+
 
 export default class SignUp extends React.Component {
   state = {
@@ -95,6 +97,7 @@ export default class SignUp extends React.Component {
           </div>
         </form>
         <div className="form-footer">
+        <Link to = "/login">Sign in to an existing account</Link>
         </div>
       </div>
     );
