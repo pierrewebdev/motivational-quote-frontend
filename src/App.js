@@ -33,7 +33,7 @@ class App extends React.Component {
     quotes: [],
     favorites: [],
     token: "",
-    errorMessage: "",
+    errorMessage: ""
   };
 
   componentDidMount() {
@@ -294,7 +294,7 @@ class App extends React.Component {
       <div className="App">
         <Header logOut = {this.logOut} />
         {/* <p style = {{fontWeight:"bold"}}>{this.state.errorMessage}</p> */}
-        {this.state.errorMessage ? alert(this.state.errorMessage) : null}
+    {this.state.errorMessage ? <p>{this.state.errorMessage}</p> : null}
         <Switch>
           <Route path="/login" exact>
             <SignIn logInUser={this.logInUser} />

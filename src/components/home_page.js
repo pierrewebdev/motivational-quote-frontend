@@ -55,7 +55,7 @@ export default class Home extends React.Component {
         </p>
         <br />
         <NavLink to="/login">
-          <button>Log in here</button>
+          <button className = "ui button">Log in here</button>
         </NavLink>
       </div>
     );
